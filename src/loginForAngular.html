@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"  ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<title>angularJS login page</title>
+	<style type="text/css">
+		[ng-cloak],
+		.ng-cloak{
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<table ng-controller="loginController" class="ng-cloak">
+		<tr>
+			<td>username:</td>
+			<td><input type="text" ng-model="user.username"></td>
+		</tr>
+		<tr>
+			<td>password:</td>
+			<td><input type="password" ng-model="user.password"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="submit" value="login" ng-click="login()"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>{{warn}}</td>
+		</tr>
+	</table>
+	<script type="text/javascript" src="../node_modules/angular/angular.min.js"></script>
+	<script type="text/javascript">
+		
+			//create module
+			var app = angular.module('myApp',[]);
+			//create controller
+			app.controller('loginController',['$scope',function($scope){
+				$scope.user = {
+					username:'',
+					password:''
+				};
+
+				$scope.warn = '';
+
+				$scope.login = function(){
+					console.log($scope.user);
+					
+				};
+				//watch the change of username and give some warnning
+				$scope.$watch('user.username',function(now,old){
+					if(now){
+						if(now.length<7){
+							$scope.warn = 'username is too short!';
+						}else{
+							$scope.warn = '';
+						}
+					}else{
+						$scope.warn = 'please input username';
+					}
+				});
+			}]);
+
+		</script>
+	</body>
+	</html>
